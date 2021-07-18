@@ -1,24 +1,20 @@
-# my-project
+# voobly-rec-vue
 
-## Project setup
-```
-npm install
-```
+List filename links for download.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Setup
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Create a .env file in the root directory and paste the following:
 
-### Lints and fixes files
-```
-npm run lint
+    VUE_APP_SERVER_PATH=[ex. http://localhost:3000/rcx]
+    
+## Run
+
+```shell
+$ npm install
+$ npm run serve
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Results
+
+Go to the website link provided in the terminal.
