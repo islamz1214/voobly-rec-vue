@@ -12,7 +12,7 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="mx-auto">
         <b-nav-form>
-          <b-nav-item>Total recs:  {{ totalFiles }}</b-nav-item>
+          <b-nav-item>Total recs: {{ tempp }}</b-nav-item>
           <b-nav-item>Created by: LNC_Trust</b-nav-item>
         <b-nav-item href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=islamz1214%40gmail.com&currency_code=USD">Donate</b-nav-item>
         </b-nav-form>
@@ -33,7 +33,9 @@
 
         </b-nav-form>
 
+
       </b-navbar-nav>
+      
   </b-navbar>
 
 </div>
@@ -49,17 +51,7 @@
 
         download>{{ file }}</a>
     </b-row>
-   <!-- <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      first-text="First"
-      prev-text="Prev"
-      next-text="Next"
-      last-text="Last"
-      align="center"
-      @input="paginate(currentPage)">
-    </b-pagination>-->
+
   </b-container>
 
 </template>
@@ -77,8 +69,9 @@ export default {
   data () {
     return {
       files: [],
-      displayFiles: [],
-      search: ''
+      filesOrdered: [],
+      search: '',
+      temp: null
     }
   },
   mounted () {
@@ -86,8 +79,71 @@ export default {
       .get(url)
       .then((response) => {
         this.files = response.data
-        this.displayFiles = response.data.slice(0, 10)
         this.rows = this.files.length
+        // Sort filenames by latest date
+        this.files.sort(function(a,b) {
+
+            const aDate = {
+                day: function() {
+                    const getMonth = a.split('_').slice(-2)[0]
+            
+                    if(getMonth === '0') {
+                        return '01' 
+                    } else if(getMonth.length === 1) {
+                        return 0 + getMonth
+                    } else {
+                        return getMonth
+                    }
+                },
+                month: function() {
+                    const getMonth = a.split('_').slice(-3)[0]
+            
+                    if(getMonth === '0') {
+                        return '01'
+                    } else if(getMonth.length === 1) {
+                        return 0 + getMonth
+                    } else {
+                        return getMonth
+                    }
+                },
+                year: a.split('_').slice(-1)[0].substring(0,4)
+            }
+
+            const bDate = {
+                day: function() {
+                    const getMonth = b.split('_').slice(-2)[0]
+            
+                    if(getMonth === '0') {
+                        return '01' 
+                    } else if(getMonth.length === 1) {
+                        return 0 + getMonth
+                    } else {
+                        return getMonth
+                    }
+                },
+                month: function() {
+                    const getMonth = b.split('_').slice(-3)[0]
+
+                    if(getMonth === '0') {
+                        return '01'
+                    } else if(getMonth.length === 1) {
+                        return 0 + getMonth
+                    } else {
+                        return getMonth
+                    }
+                },
+                year: b.split('_').slice(-1)[0].substring(0,4),
+            }
+
+            const aFinalDate = aDate.year+'-'+aDate.month()+'-'+aDate.day()
+            const bFinalDate = bDate.year+'-'+bDate.month()+'-'+bDate.day()
+            
+            if(Date.parse(aFinalDate) > Date.parse(bFinalDate)) {
+                return -1
+            } else {
+                return 1
+            }
+        })
       })
   },
   computed: {
@@ -111,9 +167,12 @@ export default {
 
     totalFiles: function () {
       return this.files.length
+    },
+
+    tempp: function() {
+        return this.files.length
     }
   }
-
 }
 
 </script>
