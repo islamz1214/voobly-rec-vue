@@ -12,7 +12,7 @@
       <!-- Right aligned nav items -->
       <b-navbar-nav class="mx-auto">
         <b-nav-form>
-          <b-nav-item>Total recs: {{ tempp }}</b-nav-item>
+          <b-nav-item>Total recs: {{ totalFiles }}</b-nav-item>
           <b-nav-item>Created by: LNC_Trust</b-nav-item>
         <b-nav-item href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=islamz1214%40gmail.com&currency_code=USD">Donate</b-nav-item>
         </b-nav-form>
